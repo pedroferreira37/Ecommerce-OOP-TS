@@ -1,13 +1,11 @@
-import { ShoppingCart } from "../cart/ShoppingCart";
-
 export class Order {
   public client: string;
-  private cart: ShoppingCart;
+  private total: number;
   private status: string = "Open";
 
-  constructor(client: string, cart: ShoppingCart) {
+  constructor(client: string, total: number) {
     this.client = client;
-    this.cart = cart;
+    this.total = total;
   }
 
   setStatus(value: string): void {
@@ -18,20 +16,11 @@ export class Order {
     return this.status;
   }
 
-  showOrder(): void {
-    this.cart.displayProducts();
-    this.cart.getTotal();
-  }
-
   GetOrderOtotal(): number {
-    return this.cart.getTotal();
+    return this.total;
   }
 
-
-
-  getName(): string {
+  getClientName(): string {
     return this.client;
   }
-
-
 }

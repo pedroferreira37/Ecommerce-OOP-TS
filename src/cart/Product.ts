@@ -1,13 +1,13 @@
-export class Product {
-  private price: number;
+import { IProduct } from "./IProduct";
+
+export class Product implements IProduct {
+  private _price: number;
 
   constructor(price: number) {
-    this.price = price;
+    this._price = price;
   }
 
   getPrice(): number {
     return this.price;
   }
-
-
 }

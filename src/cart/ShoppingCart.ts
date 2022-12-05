@@ -1,39 +1,19 @@
-import { Product } from "./Product"
-import { CartEntry } from "./CartEntry"
-export class ShoppingCart {
-  entries: Map<string, CartEntry>
+import { IProduct } from "./IProduct";
+import { Product } from "./Product";
+interface Cart {
+  add(name: string, price: number): void;
+  remove(): void;
+}
+
+export class ShoppingCart implements Cart {
+  private cart: Map<string, IProduct>;
 
   constructor() {
-    this.entries = new Map()
+    this.cart = new Map<string, IProduct>();
   }
 
-  add(productName: string, price: number): void {
-    const isStored: boolean = this.entries.has(productName);
-    if (isStored) {
-      const productEntry: CartEntry | undefined = this.entries.get(productName);
-      productEntry?.add();
-      return
-    }
-
-    const product: Product = new Product(price);
-    const entry: CartEntry = new CartEntry(product, 1)
-    this.entries.set(productName, entry);
+  add(name: string, price: number): void {
+    const product: IProduct = new Product(price);
+    this.cart.set(name, product);
   }
-
-  displayProducts(): void {
-    this.entries.forEach((key, name) => {
-      console.log(`${name}  ${key.getProduct().getPrice()},00  ${key.getQuantity()}`)
-    })
-  }
-
-  getTotal(): number {
-    let cartTotal: number = 0;
-    this.entries.forEach((key, name) => {
-      cartTotal += (key.getProduct().getPrice() * key.getQuantity());
-    })
-    return cartTotal;
-  }
-
-
-
 }
